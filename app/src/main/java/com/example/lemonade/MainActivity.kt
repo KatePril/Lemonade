@@ -5,38 +5,38 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lemonade.ui.theme.LemonadeTheme
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.text.font.FontWeight
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,14 +67,17 @@ fun AppStep(modifier: Modifier = Modifier) {
     var step by remember { mutableStateOf(1) }
     var squeezeCount by remember { mutableStateOf(0) }
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        modifier = modifier
+    ) { innerPadding ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(MaterialTheme.colorScheme.tertiaryContainer),
-            color = MaterialTheme.colorScheme.background
+            color = Color(red = 206, green = 248, blue = 217, alpha = 255)
         ) {
+            Header()
             when (step) {
                 1 -> {
                     LemonadeWithButtonAndImage(
@@ -120,6 +123,27 @@ fun AppStep(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun Header(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Surface(
+            color = Color(red = 255, green = 180, blue = 41),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Lemonade",
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
+    }
+}
+
+@Composable
 fun LemonadeWithButtonAndImage(
     imageId: Int,
     titleId: Int,
@@ -134,7 +158,10 @@ fun LemonadeWithButtonAndImage(
     ) {
         Button(
             onClick = onImageCLick,
-
+            shape = RoundedCornerShape(40.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(red = 70, green = 216, blue = 140, alpha = 255)
+            )
         ) {
             Image(
                 painter = painterResource(imageId),
@@ -144,7 +171,7 @@ fun LemonadeWithButtonAndImage(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(textId),
-            fontSize = 16.sp
+            fontSize = 18.sp
         )
     }
 }
